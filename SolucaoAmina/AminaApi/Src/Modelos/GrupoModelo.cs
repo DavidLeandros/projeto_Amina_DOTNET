@@ -3,28 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AminaApi.Src.Modelos
 {
-    public class GrupoModelo
+    [Table("tb_grupo")]
+    public class Grupo
     {
-        [Table("tb_grupo")]
-        public class Tema
-        {
-            #region Atributos
+        #region Atributos
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-            [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Titulo { get; set; }
 
-            public int Id { get; set; }
+        public string Descricao { get; set; }
 
-            public string Titulo { get; set; }
+        public string Topico { get; set; }
 
-            public string Descricao { get; set; }
+        public string Midia { get; set; }
 
-            public string Topico { get; set; }
-
-            public string Midia { get; set; }
-
-
-            #endregion
-        }
+        [ForeignKey("fk_usuario")]
+        public Usuario Usuario { get; set; }
+        #endregion
     }
 }

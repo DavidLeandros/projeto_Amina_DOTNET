@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AminaApi.Src.Modelos
 {
@@ -11,7 +13,6 @@ namespace AminaApi.Src.Modelos
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int Id { get; set; }
 
         public string CPF { get; set; }
@@ -26,6 +27,8 @@ namespace AminaApi.Src.Modelos
 
         public DateTime Data_Nascimento { get; set; }
 
+        [JsonIgnore, InverseProperty("usuario")]
+        public List<Postagem> MinhasPostagens { get; set; }
         #endregion
     }
 }
