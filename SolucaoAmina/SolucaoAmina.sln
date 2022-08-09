@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AminaApi", "AminaApi\AminaApi.csproj", "{2506A6F5-F943-4F35-AF88-C7C4EC855321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AminaTest", "AminaTest\AminaTest.csproj", "{FE3D5E21-0AE1-4789-B85E-CAC5B96784F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2506A6F5-F943-4F35-AF88-C7C4EC855321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2506A6F5-F943-4F35-AF88-C7C4EC855321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2506A6F5-F943-4F35-AF88-C7C4EC855321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2506A6F5-F943-4F35-AF88-C7C4EC855321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE3D5E21-0AE1-4789-B85E-CAC5B96784F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE3D5E21-0AE1-4789-B85E-CAC5B96784F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE3D5E21-0AE1-4789-B85E-CAC5B96784F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE3D5E21-0AE1-4789-B85E-CAC5B96784F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {644141FF-A48A-4C36-B66C-FFF7E5C03DFC}
+	EndGlobalSection
+EndGlobal
