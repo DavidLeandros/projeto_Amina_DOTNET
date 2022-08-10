@@ -30,16 +30,18 @@ namespace AminaTest.Contextos
 
             _contextos = new AminaContextos(opt);
 
-            DateTime data = new DateTime();
+            // DateTime - Mês/Dia/Ano 10:00:00
 
-            _contextos.Usuarios.Add(new Usuario{
+            _contextos.Usuarios.Add(new Usuario
+            {
                 CPF = "987.654.321-11",
                 Nome = "Manoel",
                 Genero = "Masculino",
                 Senha = "asd",
-                URL_Foto = "Url_Manoel"                
+                URL_Foto = "Url_Manoel",
+                Data_Nascimento = new DateTime(09, 06, 1999)
 
-            }) ;
+            }); ;
             _contextos.SaveChanges();
 
             var resultado = _contextos.Usuarios.FirstOrDefault(u => u.Nome == "Manoel");
