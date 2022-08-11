@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AminaApi.Src.Contexto;
+using AminaApi.Src.Repositorios;
+using AminaApi.Src.Repositorios.Implementacoes;
 using Microsoft.EntityFrameworkCore;
 
 namespace AminaApi
@@ -26,7 +28,9 @@ namespace AminaApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<AminaContextos>(opt => opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+            services.AddScoped<IPostagem, PostagemRepositorio>();
             services.AddControllers();
         }
 

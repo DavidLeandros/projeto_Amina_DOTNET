@@ -45,6 +45,23 @@ namespace AminaApi.Src.Controladores
                 return NotFound(new { Mensagem = ex.Message });
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult> NovaPostagemAsync([FromBody] Postagem postagem)
+        {
+            try
+            {
+                await _repositorio.NovoPostagemAsync(postagem);
+                return Created($"api/Postagens", postagem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
+
+
         #endregion
     }
 }
