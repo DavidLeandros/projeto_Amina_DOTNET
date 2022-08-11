@@ -75,7 +75,19 @@ namespace AminaApi.Src.Controladores
             }
         }
 
-
+        [HttpDelete("id/{idPostagem}")]
+        public async Task<ActionResult> DeletarPostagem([FromBody] int idPostagem)
+        {
+            try
+            {
+                await _repositorio.DeletarPostagemAsync(idPostagem);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return NotFound(new { Mensagem = ex.Message });
+            }
+        }
 
         #endregion
     }
