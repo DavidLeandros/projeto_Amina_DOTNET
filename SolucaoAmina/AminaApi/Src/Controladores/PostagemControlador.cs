@@ -1,6 +1,7 @@
 ﻿using AminaApi.Src.Repositorios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
@@ -32,6 +33,18 @@ namespace AminaApi.Src.Controladores
             return Ok(lista);
         }
 
+        [HttpGet("Id/{idPostagem}")]
+        public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
+        {
+            try
+            {
+                return Ok(await _repositorio.PegarPostagensPeloIdAsync(idPostagem));
+            } 
+             catch(Exception ex)
+            {
+                return NotFound(new { Mensagem = ex.Message });
+            }
+        }
         #endregion
     }
 }
