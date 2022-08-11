@@ -22,9 +22,31 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         #endregion
 
         #region Método
-        public Task AtualizarPostagemAsync(Postagem postagem)
+        public async Task AtualizarPostagemAsync(Postagem postagem)
         {
-            throw new System.NotImplementedException();
+            if (!ExisteGrupoId(postagem.Grupo.Id)) throw new Exception("Id do grupo não encontrado");
+            if (!ExisteUsusarioId(postagem.Usuario.Id)) throw new Exception("Id do usuário não encontrado");
+
+            var postagemExistente = await PegarPostagensPeloIdAsync(postagem.Id);
+            postagemExistente.Titulo = postagem.Titulo;
+            postagemExistente.Descricao = postagem.Descricao;
+            postagemExistente.Foto = postagem.Foto;
+            _contexto.Postagens.Update(postagemExistente);
+            await _contexto.SaveChangesAsync();
+
+            // funções auxiliares
+            bool ExisteGrupoId(int id)
+            {
+                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
+                return auxiliar != null;
+            }
+
+            bool ExisteUsusarioId(int id)
+            {
+                var auxiliar = _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+                return auxiliar != null;
+            }
+
         }
 
         public async Task DeletarPostagemAsync(int id)
@@ -67,9 +89,19 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             }
         }
         
-        public Task<Postagem> PegarPostagensPeloIdAsync(int id)
+        public async Task<Postagem> PegarPostagensPeloIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            if (!ExisteId(id)) throw new Exception("Id da postagem não encontrado");
+            return await _contexto.Postagens
+            .Include(u => u.Usuario)
+            .Include(g => g.Grupo)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+            bool ExisteId(int id)
+            {
+                var auxiliar = _contexto.Postagens.FirstOrDefault(u => u.Id == id);
+                return auxiliar != null;
+            }
         }
 
         public async Task<List<Postagem>> PegarTodasPostagemAsync()
