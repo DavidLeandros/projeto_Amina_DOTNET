@@ -8,7 +8,7 @@ namespace AminaApi.Src.Repositorios
     {
         Task<List<Postagem>> PegarTodasPostagemAsync();
         Task<Postagem> PegarPostagensPeloIdAsync(int id);
-        Task NovaPostegemAsync(Postagem postagem);
+        Task NovaPostagemAsync(Postagem postagem);
         Task AtualizarPostagemAsync(Postagem postagem);
         Task DeletarPostagemAsync(int id);
 

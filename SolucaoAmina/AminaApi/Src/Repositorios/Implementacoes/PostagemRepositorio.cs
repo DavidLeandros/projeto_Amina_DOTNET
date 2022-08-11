@@ -56,7 +56,7 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 
         }
 
-        public async Task NovaPostegemAsync(Postagem postagem)
+        public async Task NovaPostagemAsync(Postagem postagem)
         {
 
             if (!ExisteIdUsuario(postagem.Usuario.Id)) throw new Exception("id do Usuario não encontrado");

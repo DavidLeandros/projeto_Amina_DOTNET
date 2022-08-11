@@ -1,4 +1,5 @@
-﻿using AminaApi.Src.Repositorios;
+﻿using AminaApi.Src.Modelos;
+using AminaApi.Src.Repositorios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -51,8 +52,22 @@ namespace AminaApi.Src.Controladores
         {
             try
             {
-                await _repositorio.NovoPostagemAsync(postagem);
+                await _repositorio.NovaPostagemAsync(postagem);
                 return Created($"api/Postagens", postagem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> AtualizarPostagemAsync([FromBody] Postagem postagem)
+        {
+            try
+            {
+                await _repositorio.AtualizarPostagemAsync(postagem);
+                return Ok(postagem);
             }
             catch (Exception ex)
             {
