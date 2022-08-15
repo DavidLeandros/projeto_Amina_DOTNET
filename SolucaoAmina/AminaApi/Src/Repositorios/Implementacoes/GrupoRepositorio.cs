@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AminaApi.Src.Contexto;
 using AminaApi.Src.Modelos;
+using Microsoft.EntityFrameworkCore;
 
 namespace AminaApi.Src.Repositorios.Implementacoes
 {
@@ -12,8 +15,8 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         #endregion
 
         #region Construtores
-        public GrupoRepositorio(AminaContextos contextos) 
-        { 
+        public GrupoRepositorio(AminaContextos contextos)
+        {
             _contexto = contextos;
         }
 
@@ -32,9 +35,27 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             await _contexto.SaveChangesAsync();
         }
 
-        public Task NovoGrupoAsync(Grupo grupo)
+        public async Task NovoGrupoAsync(Grupo grupo)
         {
-            throw new System.NotImplementedException();
+            if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id Usuário não existe!");
+
+            await _contexto.Grupos.AddAsync(new Grupo
+            {
+                Titulo = grupo.Titulo,
+                Descricao = grupo.Descricao,
+                Topico = grupo.Topico,
+                Midia = grupo.Midia,
+                Usuario = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == grupo.Usuario.Id)
+
+            });
+            await _contexto.SaveChangesAsync();
+
+            //Auxiliar
+            bool ExisteIdUsuario(int Id)
+            {
+                var auxiliar = _contexto.Usuarios.FirstOrDefault(u => u.Id == Id);
+                return auxiliar != null;
+            }
         }
 
         public Task<Grupo> PegarGruposPeloIdAsync(int id)
@@ -48,5 +69,6 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         }
 
         #endregion
+
     }
 }
