@@ -24,9 +24,25 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 
         #region Método
 
-        public Task AtualizarGrupoAsync(Grupo grupo)
+        public async Task AtualizarGrupoAsync(Grupo grupo)
         {
-            throw new System.NotImplementedException();
+            if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id do grupo não encontrado");
+
+            var grupoExiste = await PegarGruposPeloIdAsync(grupo.Id);
+            grupoExiste.Titulo = grupo.Titulo;
+            grupoExiste.Descricao = grupo.Descricao;
+            grupoExiste.Topico = grupo.Topico;
+            grupoExiste.Midia = grupo.Midia;
+            
+            _contexto.Grupos.Update(grupoExiste);
+            await _contexto.SaveChangesAsync();
+
+            //Auxiliar
+            bool ExisteIdUsuario(int id)
+            {
+                var auxiliar  = _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+                return auxiliar != null;
+            }
         }
 
         public async Task DeletarGrupoAsync(int id)
