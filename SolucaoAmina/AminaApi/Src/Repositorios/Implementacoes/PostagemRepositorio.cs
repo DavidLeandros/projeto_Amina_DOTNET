@@ -53,7 +53,6 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         {
             _contexto.Postagens.Remove(await PegarPostagensPeloIdAsync(id));
             await _contexto.SaveChangesAsync();
-
         }
 
         public async Task NovaPostagemAsync(Postagem postagem)
