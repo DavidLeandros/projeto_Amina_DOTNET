@@ -76,12 +76,14 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 
         public Task<Grupo> PegarGruposPeloIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            
         }
 
-        public Task<List<Grupo>> PegarTodosGruposAsync()
+        public async Task<List<Grupo>> PegarTodosGruposAsync()
         {
-            throw new System.NotImplementedException();
+            return await _contexto.Grupos
+                 .Include(g => g.Usuario)
+                 .ToListAsync();
         }
 
         #endregion
