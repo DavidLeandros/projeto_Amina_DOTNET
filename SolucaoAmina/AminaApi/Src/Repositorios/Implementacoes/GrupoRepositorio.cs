@@ -79,14 +79,14 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             if (!ExisteIdUsuario(id)) throw new Exception("Id do grupo não encontrado");
 
             return await _contexto.Grupos
-                .Include(g => g.Usuario)
+                .Include(u => u.Usuario)
                 .FirstOrDefaultAsync(g => g.Id == id);
                 
 
             //função auxiliar
             bool ExisteIdUsuario(int Id)
             {
-                var auxiliar = _contexto.Grupos.FirstOrDefault(u => u.Id == id);
+                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
                 return auxiliar != null;
             }
         }
