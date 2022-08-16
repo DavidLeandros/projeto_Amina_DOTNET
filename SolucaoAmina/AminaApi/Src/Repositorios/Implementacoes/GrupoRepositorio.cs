@@ -74,9 +74,21 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             }
         }
 
-        public Task<Grupo> PegarGruposPeloIdAsync(int id)
+        public async Task<Grupo> PegarGruposPeloIdAsync(int id)
         {
-            
+            if (!ExisteIdUsuario(id)) throw new Exception("Id do grupo não encontrado");
+
+            return await _contexto.Grupos
+                .Include(g => g.Usuario)
+                .FirstOrDefaultAsync(g => g.Id == id);
+                
+
+            //função auxiliar
+            bool ExisteIdUsuario(int Id)
+            {
+                var auxiliar = _contexto.Grupos.FirstOrDefault(u => u.Id == id);
+                return auxiliar != null;
+            }
         }
 
         public async Task<List<Grupo>> PegarTodosGruposAsync()
