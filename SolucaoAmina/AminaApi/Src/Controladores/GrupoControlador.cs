@@ -1,5 +1,6 @@
 ﻿using AminaApi.Src.Repositorios;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
@@ -32,6 +33,18 @@ namespace AminaApi.Src.Controladores
             return Ok(lista);
         }
 
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult> PegarGruposPeloIdAsync([FromRoute] int id)
+        {
+            try
+            {
+                return Ok(await _repositorio.PegarGruposPeloIdAsync(id));
+            }
+            catch(Exception ex)
+            {
+                return NotFound(new {Mensagem = ex.Message});
+            }
+        }
         #endregion
 
     }
