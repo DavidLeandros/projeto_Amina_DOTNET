@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/Grupos")]
+    [Produces("application/json")]
     public class GrupoControlador : ControllerBase
     {
 
@@ -45,6 +46,21 @@ namespace AminaApi.Src.Controladores
                 return NotFound(new {Mensagem = ex.Message});
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult> NovoGrupoAsync([FromBody] Grupo grupo)
+        {
+            try
+            {
+                await _repositorio.NovoGrupoAsync(grupo);
+                return Created($"api/Grupos", grupo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
         #endregion
 
     }
