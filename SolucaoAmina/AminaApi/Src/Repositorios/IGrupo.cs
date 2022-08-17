@@ -11,5 +11,6 @@ namespace AminaApi.Src.Repositorios
         Task NovoGrupoAsync(Grupo grupo);
         Task AtualizarGrupoAsync(Grupo grupo);
         Task DeletarGrupoAsync(int id);
+        Task PegarTodosGrupoAsync();
     }
 }
