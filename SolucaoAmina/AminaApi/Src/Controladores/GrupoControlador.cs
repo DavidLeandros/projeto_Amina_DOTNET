@@ -1,4 +1,5 @@
-﻿using AminaApi.Src.Repositorios;
+﻿using AminaApi.Src.Modelos;
+using AminaApi.Src.Repositorios;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -60,7 +61,33 @@ namespace AminaApi.Src.Controladores
                 return BadRequest(new { Mensagem = ex.Message });
             }
         }
+        [HttpPut]
+        public async Task<ActionResult> AtualizarGrupo([FromBody] Grupo grupo)
+        {
+            try
+            {
+                await _repositorio.AtualizarGrupoAsync(grupo);
+                return Ok(grupo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
 
+        [HttpDelete("deletar/{idGrupo}")]
+        public async Task<ActionResult> DeletarGrupo([FromRoute] int idGrupo)
+        {
+            try
+            {
+                await _repositorio.DeletarGrupoAsync(idGrupo);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { Mensagem = ex.Message });
+            }
+        }
         #endregion
 
     }
