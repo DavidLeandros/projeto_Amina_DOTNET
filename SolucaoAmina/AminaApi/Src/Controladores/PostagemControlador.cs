@@ -33,7 +33,7 @@ namespace AminaApi.Src.Controladores
 
             return Ok(lista);
         }
-
+         
         [HttpGet("Id/{idPostagem}")]
         public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
         {

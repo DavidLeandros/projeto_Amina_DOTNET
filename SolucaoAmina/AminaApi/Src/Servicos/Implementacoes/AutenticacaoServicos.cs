@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AminaApi.Src.Servicos.Implementacoes
 {
-    public class AutenticacaoServicos
+    public class AutenticacaoServicos : IAutenticacao
     {
         #region Atributos
         private IUsuario _repositorio;
@@ -64,7 +64,7 @@ namespace AminaApi.Src.Servicos.Implementacoes
                 Subject = new ClaimsIdentity(
                     new Claim[] 
                     { 
-                        //new Claim(ClaimTypes.CPF, usuario.CPF.ToString()), 
+                        new Claim(ClaimTypes.Name, usuario.CPF.ToString()), 
                         new Claim(ClaimTypes.Role, usuario.Tipo.ToString())
                     }), 
                 Expires = DateTime.UtcNow.AddHours(2), 
