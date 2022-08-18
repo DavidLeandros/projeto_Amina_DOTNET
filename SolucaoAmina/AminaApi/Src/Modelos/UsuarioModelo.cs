@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AminaApi.Src.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,6 +25,9 @@ namespace AminaApi.Src.Modelos
         public string Senha { get; set; }
 
         public string URL_Foto { get; set; }
+
+        [Required]
+        public TipoUsuario Tipo { get; set; }
 
         public DateTime Data_Nascimento { get; set; }
 
