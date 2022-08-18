@@ -13,21 +13,9 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             _contexto = contexto;
         }
 
-        public async Task<List<Usuario>> PegarTodasUsuarioAsync()
+        public Task AtualizarUsuarioAsync(Usuario usuario)
         {
-
-        }
-
-        public async Task<Usuario> PegarUsuarioPeloIdAsync(int id)
-        {
-
-        }
-
-        public async Task<Usuario>
-
-        public async Task AtualizarUsuarioAsync(Usuario usuario)
-        {
-
+            throw new System.NotImplementedException();
         }
 
         public async Task NovaUsuarioAsync(Usuario usuario)
@@ -45,6 +33,14 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             await _contexto.SaveChangesAsync();
         }
 
-        
+        public Task<List<Usuario>> PegarTodasUsuarioAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
