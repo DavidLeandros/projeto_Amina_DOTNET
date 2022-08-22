@@ -10,18 +10,96 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 {
     public class PostagemRepositorio : IPostagem
     {
-        #region Atributos
+        #region Atributo
         private readonly AminaContextos _contexto;
         #endregion
 
-        #region Construtores
+        #region Construtor
         public PostagemRepositorio(AminaContextos contextos) 
         { 
             _contexto = contextos;
         }
         #endregion
 
-        #region Método
+        #region Métodos
+        /// <summary>
+        /// <para> Resumo: Método assincrono para pegar todos as postagens</para>
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        public async Task<List<Postagem>> PegarTodasPostagemAsync()
+        {
+            return await _contexto.Postagens
+                .Include(u => u.Usuario)
+                .Include(g => g.Grupo)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// <para>Resumo: Método assincrono para pegar postagem pelo Id</para>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ActionResult</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Postagem> PegarPostagensPeloIdAsync(int id)
+        {
+            if (!ExisteId(id)) throw new Exception("Id da postagem não encontrado");
+            return await _contexto.Postagens
+            .Include(u => u.Usuario)
+            .Include(g => g.Grupo)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+            bool ExisteId(int id)
+            {
+                var auxiliar = _contexto.Postagens.FirstOrDefault(u => u.Id == id);
+                return auxiliar != null;
+            }
+        }
+
+        /// <summary>
+        /// <para> Resumo: Método assíncrono para criar postagem</para>
+        /// </summary>
+        /// <param name="postagem"></param>
+        /// <returns>ActionResult</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task NovaPostagemAsync(Postagem postagem)
+        {
+
+            if (!ExisteIdUsuario(postagem.Usuario.Id)) throw new Exception("id do Usuario não encontrado");
+
+            if (!ExisteIdGrupo(postagem.Grupo.Id)) throw new Exception("Grupo não encontrado");
+
+            await _contexto.Postagens.AddAsync(new Postagem
+            {
+                Titulo = postagem.Titulo,
+                Descricao = postagem.Descricao,
+                Foto = postagem.Foto,
+                Usuario = _contexto.Usuarios.FirstOrDefault(p => p.Id == postagem.Usuario.Id),
+                Grupo = _contexto.Grupos.FirstOrDefault(g => g.Id == postagem.Grupo.Id)
+            });
+            await _contexto.SaveChangesAsync();
+
+            //função auxiliar
+            bool ExisteIdUsuario(int id)
+            {
+                var auxiliar = _contexto.Usuarios.FirstOrDefault(p => p.Id == id);
+
+                return auxiliar != null;
+            }
+
+            bool ExisteIdGrupo(int id)
+            {
+                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
+
+                return auxiliar != null;
+            }
+        }
+
+        /// <summary>
+        /// <para>Resumo: Método assincrono para atualizar postagem</para>
+        /// </summary>
+        /// <param name="postagem"></param>
+        /// <returns>ActionResult</returns>
+        /// <exception cref="Exception"></exception>
         public async Task AtualizarPostagemAsync(Postagem postagem)
         {
             if (!ExisteGrupoId(postagem.Grupo.Id)) throw new Exception("Id do grupo não encontrado");
@@ -49,68 +127,16 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assincrono para deletar postagem</para>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ActionResult</returns>
         public async Task DeletarPostagemAsync(int id)
         {
             _contexto.Postagens.Remove(await PegarPostagensPeloIdAsync(id));
             await _contexto.SaveChangesAsync();
         }
-
-        public async Task NovaPostagemAsync(Postagem postagem)
-        {
-
-            if (!ExisteIdUsuario(postagem.Usuario.Id)) throw new Exception("id do Usuario não encontrado");
-
-            if (!ExisteIdGrupo(postagem.Grupo.Id)) throw new Exception("Grupo não encontrado");
-
-            await _contexto.Postagens.AddAsync(new Postagem
-            {
-                Titulo = postagem.Titulo,
-                Descricao = postagem.Descricao,
-                Foto = postagem.Foto,
-                Usuario = _contexto.Usuarios.FirstOrDefault(p => p.Id == postagem.Usuario.Id),
-                Grupo = _contexto.Grupos.FirstOrDefault(g => g.Id == postagem.Grupo.Id)
-            });
-            await _contexto.SaveChangesAsync();
-           
-            //função auxiliar
-            bool ExisteIdUsuario(int id)
-            {
-                var auxiliar = _contexto.Usuarios.FirstOrDefault(p => p.Id == id);
-
-                return auxiliar != null;
-            }
-
-            bool ExisteIdGrupo(int id)
-            {
-                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
-
-                return auxiliar != null;
-            }
-        }
-        
-        public async Task<Postagem> PegarPostagensPeloIdAsync(int id)
-        {
-            if (!ExisteId(id)) throw new Exception("Id da postagem não encontrado");
-            return await _contexto.Postagens
-            .Include(u => u.Usuario)
-            .Include(g => g.Grupo)
-            .FirstOrDefaultAsync(p => p.Id == id);
-
-            bool ExisteId(int id)
-            {
-                var auxiliar = _contexto.Postagens.FirstOrDefault(u => u.Id == id);
-                return auxiliar != null;
-            }
-        }
-
-        public async Task<List<Postagem>> PegarTodasPostagemAsync()
-        {
-            return await _contexto.Postagens
-                .Include(u => u.Usuario)
-                .Include(g => g.Grupo)
-                .ToListAsync();
-        }
-                
         #endregion
     }
 }

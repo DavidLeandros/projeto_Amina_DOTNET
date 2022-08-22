@@ -17,7 +17,7 @@ namespace AminaApi.Src.Servicos.Implementacoes
         public IConfiguration Configuracao { get; }
         #endregion
 
-        #region
+        #region Construtor
         public AutenticacaoServicos(IUsuario repositorio, IConfiguration configuration)
         {
             _repositorio = repositorio;
@@ -25,11 +25,11 @@ namespace AminaApi.Src.Servicos.Implementacoes
         }
         #endregion
 
+        #region Métodos
         /// <summary> 
         /// <para>Resumo: Método responsavel por criptografar senha</para> 
         /// <param name="senha">Senha a ser criptografada</param> 
         /// </summary> 
-        #region
         public string CodificarSenha(string senha)
         {
             var bytes = Encoding.UTF8.GetBytes(senha);

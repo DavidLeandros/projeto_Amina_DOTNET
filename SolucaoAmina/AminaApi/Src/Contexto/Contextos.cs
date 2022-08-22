@@ -11,7 +11,7 @@ namespace AminaApi.Src.Contexto
         public DbSet<Grupo> Grupos { get; set; }
         #endregion
 
-        #region
+        #region Construtor
         public AminaContextos(DbContextOptions<AminaContextos> opt) : base(opt)
         {
         }

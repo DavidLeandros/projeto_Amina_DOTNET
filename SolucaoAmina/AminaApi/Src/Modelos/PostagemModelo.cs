@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AminaApi.Src.Modelos
 {
-    [Table("tb_postagem")]
+    /// <summary>
+    /// <para> Classe responsável por representar tb_postagens no banco.</para>
+    /// </summary>
+    [Table("tb_postagens")]
     public class Postagem
     {
         #region Atributos

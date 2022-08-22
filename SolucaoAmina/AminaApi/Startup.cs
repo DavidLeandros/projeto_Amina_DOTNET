@@ -30,11 +30,12 @@ namespace AminaApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // Configuraçãp Banco de Dados
             services.AddDbContext<AminaContextos>(opt => opt.UseSqlServer(Configuration["ConnectionStringsDev:DefaultConnection"]));
+
+            // Repositorios
             services.AddScoped<IPostagem, PostagemRepositorio>();
             services.AddScoped<IGrupo, GrupoRepositorio>();
             services.AddScoped<IUsuario, UsuarioRepositorio>();
@@ -44,7 +45,6 @@ namespace AminaApi
             services.AddControllers();
 
             // Configuração de Serviços
-
             services.AddScoped<IAutenticacao, AutenticacaoServicos>();
 
             // Configuração do Token Autenticação JWTBearer
@@ -68,7 +68,6 @@ namespace AminaApi
             );
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AminaContextos contexto)
         {
             if (env.IsDevelopment())

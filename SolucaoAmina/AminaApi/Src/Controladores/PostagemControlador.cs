@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
 {
-    [Route("api/Postagens")]
     [ApiController]
+    [Route("api/Postagens")]
     [Produces("application/json")]
     public class PostagemControlador : ControllerBase
     {
@@ -24,6 +24,10 @@ namespace AminaApi.Src.Controladores
         #endregion
 
         #region Metodos
+        /// <summary>
+        /// Pegar todas as postagens
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpGet]
         public async Task<ActionResult> PegarTodasPostagensAsync()
         {
@@ -33,7 +37,14 @@ namespace AminaApi.Src.Controladores
 
             return Ok(lista);
         }
-         
+
+        /// <summary>
+        /// Pegar postagem pelo Id
+        /// </summary>
+        /// <param name="idPostagem">Id da postagem</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna o postagem</response> 
+        /// <response code="404">Id não existente</response>
         [HttpGet("Id/{idPostagem}")]
         public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
         {
@@ -47,7 +58,27 @@ namespace AminaApi.Src.Controladores
             }
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Criar nova postagem
+        /// </summary>
+        /// <param name="postagem">Construtor para criar postagens</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição: 
+        ///     
+        ///     Post /api/Postagens/cadastrar
+        ///     {
+        ///         "titulo": "",
+        ///         "descricao": "",
+        ///         "topico": "",
+        ///         "midia": "",
+        ///         "usuario": ""
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="201">Retorna grupo criado</response> 
+        /// <response code="401">Postagem ja cadastrado</response>
+        [HttpPost("cadastrar")]
         public async Task<ActionResult> NovaPostagemAsync([FromBody] Postagem postagem)
         {
             try
@@ -61,6 +92,25 @@ namespace AminaApi.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Atualizar postagem
+        /// </summary>
+        /// <param name="grupo">Construtor para atualizar postagem</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição: 
+        ///     
+        ///     Put /api/Postagens
+        ///     {
+        ///         "id": 0,
+        ///         "titulo": "",
+        ///         "descricao": "",
+        ///         "topico": "",
+        ///         "midia": ""
+        ///     }
+        /// </remarks>
+        /// <response code="200">Retorna postagem atualizado</response> 
+        /// <response code="400">Erro na requisição</response>
         [HttpPut]
         public async Task<ActionResult> AtualizarPostagemAsync([FromBody] Postagem postagem)
         {
@@ -75,6 +125,13 @@ namespace AminaApi.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Deletar postagem
+        /// </summary>
+        /// <param name="id">Id da postagem</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="204">Postagem deletada</response>
+        /// <response code="404">Id da postagem não existe</response>
         [HttpDelete("id/{idPostagem}")]
         public async Task<ActionResult> DeletarPostagem([FromBody] int idPostagem)
         {
