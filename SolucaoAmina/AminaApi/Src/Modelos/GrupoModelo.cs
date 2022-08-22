@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AminaApi.Src.Modelos
 {
-    [Table("tb_grupo")]
+    /// <summary>
+    /// <para> Classe responsável por representar tb_grupos no banco.</para>
+    /// </summary>
+    [Table("tb_grupos")]
     public class Grupo
     {
         #region Atributos

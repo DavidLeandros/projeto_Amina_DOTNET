@@ -18,7 +18,8 @@ namespace AminaApi.Src.Controladores
         private readonly IUsuario _repositorio;
         private readonly IAutenticacao _servicos;
         #endregion
-        #region Construtores
+
+        #region Construtor
         public UsuarioControlador(IUsuario repositorio, IAutenticacao servicos)
         {
             _repositorio = repositorio;

@@ -26,7 +26,10 @@ namespace AminaApi.Src.Controladores
         #endregion
 
         #region Métodos
-
+        /// <summary> 
+        /// Pegar todos os grupos
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpGet]
         public async Task<ActionResult> PegarTodosGruposAsync()
         {
@@ -35,6 +38,13 @@ namespace AminaApi.Src.Controladores
             return Ok(lista);
         }
 
+        /// <summary>
+        /// Pegar usuario pelo Id
+        /// </summary>
+        /// <param name="id">Id do grupo</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna o grupo</response> 
+        /// <response code="404">Id não existente</response>
         [HttpGet("id/{id}")]
         public async Task<ActionResult> PegarGruposPeloIdAsync([FromRoute] int id)
         {
@@ -48,7 +58,27 @@ namespace AminaApi.Src.Controladores
             }
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Criar novo Grupo
+        /// </summary>
+        /// <param name="grupo">Construtor para criar grupo</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição: 
+        ///     
+        ///     Post /api/Grupos/cadastrar
+        ///     {
+        ///         "titulo": "",
+        ///         "descricao": "",
+        ///         "topico": "",
+        ///         "midia": "",
+        ///         "usuario": ""
+        ///     }
+        ///     
+        /// </remarks>
+        /// <response code="201">Retorna grupo criado</response> 
+        /// <response code="401">grupo ja cadastrado</response>
+        [HttpPost("cadastrar")]
         public async Task<ActionResult> NovoGrupoAsync([FromBody] Grupo grupo)
         {
             try
@@ -61,6 +91,27 @@ namespace AminaApi.Src.Controladores
                 return BadRequest(new { Mensagem = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Atualizar Grupo
+        /// </summary>
+        /// <param name="grupo">Construtor para atualizar grupo</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição: 
+        ///     
+        ///     Put /api/Grupos
+        ///     {
+        ///         "id": 0,
+        ///         "titulo": "",
+        ///         "descricao": "",
+        ///         "topico": "",
+        ///         "midia": "",
+        ///         "usuario": ""
+        ///     }
+        /// </remarks>
+        /// <response code="200">Retorna grupo atualizado</response> 
+        /// <response code="400">Erro na requisição</response>
         [HttpPut]
         public async Task<ActionResult> AtualizarGrupo([FromBody] Grupo grupo)
         {
@@ -75,6 +126,13 @@ namespace AminaApi.Src.Controladores
             }
         }
 
+        /// <summary>
+        /// Deletar grupo pelo Id
+        /// </summary>
+        /// <param name="id">Id do grupo</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="204">Grupo deletado</response>
+        /// <response code="404">Id do grupo não existe</response>
         [HttpDelete("deletar/{idGrupo}")]
         public async Task<ActionResult> DeletarGrupo([FromRoute] int idGrupo)
         {

@@ -10,47 +10,58 @@ namespace AminaApi.Src.Repositorios.Implementacoes
 {
     public class GrupoRepositorio : IGrupo
     {
-        #region Atributos
+        #region Atributo
         private readonly AminaContextos _contexto;
         #endregion
 
-        #region Construtores
+        #region Construtor
         public GrupoRepositorio(AminaContextos contextos)
         {
             _contexto = contextos;
         }
-
         #endregion
 
-        #region Método
-
-        public async Task AtualizarGrupoAsync(Grupo grupo)
+        #region Métodos
+        /// <summary>
+        /// <para>Resumo: Método assincrono para pegar todos os grupos</para>
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        public async Task<List<Grupo>> PegarTodosGruposAsync()
         {
-            if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id do grupo não encontrado");
+            return await _contexto.Grupos
+                 .Include(g => g.Usuario)
+                 .ToListAsync();
+        }
 
-            var grupoExiste = await PegarGruposPeloIdAsync(grupo.Id);
-            grupoExiste.Titulo = grupo.Titulo;
-            grupoExiste.Descricao = grupo.Descricao;
-            grupoExiste.Topico = grupo.Topico;
-            grupoExiste.Midia = grupo.Midia;
-            
-            _contexto.Grupos.Update(grupoExiste);
-            await _contexto.SaveChangesAsync();
+        /// <summary>
+        /// <para>Resumo: Método assincrono para pegar grupo pelo Id</para>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Grupo> PegarGruposPeloIdAsync(int id)
+        {
+            if (!ExisteIdUsuario(id)) throw new Exception("Id do grupo não encontrado");
 
-            //Auxiliar
-            bool ExisteIdUsuario(int id)
+            return await _contexto.Grupos
+                .Include(u => u.Usuario)
+                .FirstOrDefaultAsync(g => g.Id == id);
+
+
+            //função auxiliar
+            bool ExisteIdUsuario(int Id)
             {
-                var auxiliar  = _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
                 return auxiliar != null;
             }
         }
 
-        public async Task DeletarGrupoAsync(int id)
-        {
-            _contexto.Grupos.Remove(await PegarGruposPeloIdAsync(id));
-            await _contexto.SaveChangesAsync();
-        }
-
+        /// <summary>
+        /// <para>Resumo: Método assincrono para criar grupo</para>
+        /// </summary>
+        /// <param name="grupo"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task NovoGrupoAsync(Grupo grupo)
         {
             if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id Usuário não existe!");
@@ -74,30 +85,43 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             }
         }
 
-        public async Task<Grupo> PegarGruposPeloIdAsync(int id)
+        /// <summary>
+        /// <para>Resumo: Método assincrono para atualizar grupo</para>
+        /// </summary>
+        /// <param name="grupo"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task AtualizarGrupoAsync(Grupo grupo)
         {
-            if (!ExisteIdUsuario(id)) throw new Exception("Id do grupo não encontrado");
+            if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id do grupo não encontrado");
 
-            return await _contexto.Grupos
-                .Include(u => u.Usuario)
-                .FirstOrDefaultAsync(g => g.Id == id);
-                
+            var grupoExiste = await PegarGruposPeloIdAsync(grupo.Id);
+            grupoExiste.Titulo = grupo.Titulo;
+            grupoExiste.Descricao = grupo.Descricao;
+            grupoExiste.Topico = grupo.Topico;
+            grupoExiste.Midia = grupo.Midia;
+            
+            _contexto.Grupos.Update(grupoExiste);
+            await _contexto.SaveChangesAsync();
 
-            //função auxiliar
-            bool ExisteIdUsuario(int Id)
+            //Auxiliar
+            bool ExisteIdUsuario(int id)
             {
-                var auxiliar = _contexto.Grupos.FirstOrDefault(g => g.Id == id);
+                var auxiliar  = _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
                 return auxiliar != null;
             }
         }
 
-        public async Task<List<Grupo>> PegarTodosGruposAsync()
+        /// <summary>
+        /// <para>Resumo: Método assincrono para deletar grupo</para>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeletarGrupoAsync(int id)
         {
-            return await _contexto.Grupos
-                 .Include(g => g.Usuario)
-                 .ToListAsync();
+            _contexto.Grupos.Remove(await PegarGruposPeloIdAsync(id));
+            await _contexto.SaveChangesAsync();
         }
-
         #endregion
 
     }
