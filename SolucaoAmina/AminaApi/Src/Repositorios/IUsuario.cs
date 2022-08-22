@@ -6,7 +6,7 @@ namespace AminaApi.Src.Repositorios
 {
     public interface IUsuario
     {
-        Task<List<Usuario>> PegarTodasUsuarioAsync();
+        Task<List<Usuario>> PegarTodosUsuarioAsync();
         Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf);
         Task AtualizarUsuarioAsync(Usuario usuario);
         Task NovaUsuarioAsync(Usuario usuario);
