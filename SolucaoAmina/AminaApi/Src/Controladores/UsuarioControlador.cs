@@ -67,13 +67,13 @@ namespace AminaApi.Src.Controladores
         /// 
         ///     POST /api/Usuarios/cadastrar 
         ///     { 
-        ///         "cpf": "111.222.333-44",
+        ///         "cpf": "11122233344",
         ///         "nome": "Nome do Usuario", 
         ///         "genero": "Feminino", 
         ///         "senha": "134652", 
-        ///         "url_foto": "URLFOTO", 
+        ///         "urlfoto": "URLFOTO", 
         ///         "tipo": "NORMAL",
-        ///         "data_nascimento": "2022-08-19T11:07:37.470Z"
+        ///         "datanascimento": "2022-08-19T11:07:37.470Z"
         ///     } 
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
@@ -104,13 +104,13 @@ namespace AminaApi.Src.Controladores
         ///     POST /api/Usuarios/cadastrar 
         ///     { 
         ///         "id": 0,
-        ///         "cpf": "111.222.333-44",
+        ///         "cpf": "11122233344",
         ///         "nome": "Nome do Usuario", 
         ///         "genero": "Feminino", 
         ///         "senha": "134652", 
-        ///         "url_foto": "URLFOTO", 
+        ///         "urlfoto": "URLFOTO", 
         ///         "tipo": "NORMAL",
-        ///         "data_nascimento": "2022-08-19T11:07:37.470Z"
+        ///         "datanascimento": "2022-08-19T11:07:37.470Z"
         ///     }
         ///     
         /// </remarks> 
@@ -139,7 +139,7 @@ namespace AminaApi.Src.Controladores
         /// Exemplo de requisição: 
         ///     POST /api/Usuarios/logar 
         ///     { 
-        ///         "CPF": "111.222.333-44", 
+        ///         "cpf": "11122233344", 
         ///         "senha": "134652" 
         ///     } 
         /// </remarks> 

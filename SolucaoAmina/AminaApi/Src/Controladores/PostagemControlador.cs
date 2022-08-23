@@ -95,7 +95,7 @@ namespace AminaApi.Src.Controladores
         /// <summary>
         /// Atualizar postagem
         /// </summary>
-        /// <param name="grupo">Construtor para atualizar postagem</param>
+        /// <param name="postagem">Construtor para atualizar postagem</param>
         /// <returns>ActionResult</returns>
         /// <remarks>
         /// Exemplo de requisição: 
@@ -128,7 +128,7 @@ namespace AminaApi.Src.Controladores
         /// <summary>
         /// Deletar postagem
         /// </summary>
-        /// <param name="id">Id da postagem</param>
+        /// <param name="idPostagem">Id da postagem</param>
         /// <returns>ActionResult</returns>
         /// <response code="204">Postagem deletada</response>
         /// <response code="404">Id da postagem não existe</response>

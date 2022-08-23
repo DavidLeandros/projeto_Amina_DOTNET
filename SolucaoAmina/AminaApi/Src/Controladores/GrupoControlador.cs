@@ -129,7 +129,7 @@ namespace AminaApi.Src.Controladores
         /// <summary>
         /// Deletar grupo pelo Id
         /// </summary>
-        /// <param name="id">Id do grupo</param>
+        /// <param name="idGrupo">Id do grupo</param>
         /// <returns>ActionResult</returns>
         /// <response code="204">Grupo deletado</response>
         /// <response code="404">Id do grupo não existe</response>
