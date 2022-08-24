@@ -71,7 +71,7 @@ namespace AminaApi
             services.AddSwaggerGen(
                 s =>
                 {
-                    s.SwaggerDoc("v1", new OpenApiInfo { Title = "Blog Pessoal", Version = "v1" });
+                    s.SwaggerDoc("v1", new OpenApiInfo { Title = "Amina", Version = "v1" });
                     s.AddSecurityDefinition(
                         "Bearer",
                         new OpenApiSecurityScheme()
@@ -114,7 +114,7 @@ namespace AminaApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlogPessoal v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Amina v1");
                     c.RoutePrefix = string.Empty;
                 });
             }

@@ -37,15 +37,7 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         /// <returns>ActionResult</returns>
         public async Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf)
         {
-            if (!ExisteCPF(cpf)) throw new Exception("CPF do usuário não foi encontrado!");
-
             return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.CPF == cpf);
-
-            bool ExisteCPF(string cpf)
-            {
-                var aux = _contexto.Usuarios.FirstAsync(u => u.CPF == cpf);
-                return aux != null;
-            }
         }
 
         /// <summary>
@@ -53,7 +45,7 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns>ActionResult</returns>
-        public async Task NovaUsuarioAsync(Usuario usuario)
+        public async Task NovoUsuarioAsync(Usuario usuario)
         {
             await _contexto.Usuarios.AddAsync(new Usuario
             {

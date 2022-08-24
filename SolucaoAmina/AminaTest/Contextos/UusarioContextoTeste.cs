@@ -38,8 +38,8 @@ namespace AminaTest.Contextos
                 Nome = "Manoel",
                 Genero = "Masculino",
                 Senha = "asd",
-                URL_Foto = "Url_Manoel",
-                Data_Nascimento = new DateTime(09, 06, 1999)
+                UrlFoto = "Url_Manoel",
+                DataNascimento = new DateTime(09, 06, 1999)
 
             }); ;
             _contextos.SaveChanges();

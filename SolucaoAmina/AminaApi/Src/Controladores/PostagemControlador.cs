@@ -45,7 +45,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o postagem</response> 
         /// <response code="404">Id não existente</response>
-        [HttpGet("Id/{idPostagem}")]
+        [HttpGet("id/{idPostagem}")]
         public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
         {
             try
@@ -77,7 +77,7 @@ namespace AminaApi.Src.Controladores
         ///     
         /// </remarks>
         /// <response code="201">Retorna grupo criado</response> 
-        /// <response code="401">Postagem ja cadastrado</response>
+        /// <response code="401">Postagem já cadastrado</response>
         [HttpPost("cadastrar")]
         public async Task<ActionResult> NovaPostagemAsync([FromBody] Postagem postagem)
         {
@@ -108,6 +108,7 @@ namespace AminaApi.Src.Controladores
         ///         "topico": "",
         ///         "midia": ""
         ///     }
+        ///     
         /// </remarks>
         /// <response code="200">Retorna postagem atualizado</response> 
         /// <response code="400">Erro na requisição</response>
