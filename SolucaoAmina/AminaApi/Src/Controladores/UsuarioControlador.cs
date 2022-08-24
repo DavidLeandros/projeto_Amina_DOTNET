@@ -2,7 +2,6 @@
 using AminaApi.Src.Repositorios;
 using AminaApi.Src.Servicos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -29,9 +28,10 @@ namespace AminaApi.Src.Controladores
 
         #region Métodos
         /// <summary> 
-        /// Pegar usuario pelo CPF
+        /// Pegar todos os usuários
         /// </summary>
         [HttpGet]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodosUsuarioAsync()
         {
             var lista = await _repositorio.PegarTodosUsuarioAsync();
@@ -42,14 +42,14 @@ namespace AminaApi.Src.Controladores
         }
 
         /// <summary> 
-        /// Pegar usuario pelo CPF
+        /// Pegar usuário pelo CPF
         /// </summary> 
         /// <param name="usuarioCpf">CPF do usuario</param> 
         /// <returns>ActionResult</returns> 
         /// <response code="200">Retorna o usuario</response> 
         /// <response code="404">CPF não existente</response>
         [HttpGet("cpf/{usuarioCpf}")]
-        [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> PegarUsuarioPeloCPFAsync([FromRoute] string usuarioCpf)
         {
             var usuario = await _repositorio.PegarUsuarioPeloCPFAsync(usuarioCpf);
@@ -75,9 +75,10 @@ namespace AminaApi.Src.Controladores
         ///         "tipo": "NORMAL",
         ///         "datanascimento": "2022-08-19T11:07:37.470Z"
         ///     } 
+        ///     
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
-        /// <response code="401">E-mail ja cadastrado</response>
+        /// <response code="401">CPF ja cadastrado</response>
         [HttpPost("cadastrar")]
         [AllowAnonymous]
         public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuario)
@@ -85,7 +86,7 @@ namespace AminaApi.Src.Controladores
             try
             {
                 await _servicos.CriarUsuarioSemDuplicarAsync(usuario);
-                return Created($"api/Usuarios/email/{usuario.CPF}", usuario);
+                return Created($"api/Usuarios/cpf/{usuario.CPF}", usuario);
 
             }catch (Exception ex)
             {
@@ -101,7 +102,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks> 
         /// Exemplo de requisição: 
         /// 
-        ///     POST /api/Usuarios/cadastrar 
+        ///     PUT /api/Usuarios/cadastrar 
         ///     { 
         ///         "id": 0,
         ///         "cpf": "11122233344",
@@ -117,6 +118,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="200">Retorna usuario atualizado</response> 
         /// <response code="400">Erro na requisição</response>
         [HttpPut]
+        [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarUsuarioAsync([FromBody] Usuario usuario)
         {
             try
@@ -137,11 +139,13 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns> 
         /// <remarks> 
         /// Exemplo de requisição: 
+        /// 
         ///     POST /api/Usuarios/logar 
         ///     { 
         ///         "cpf": "11122233344", 
         ///         "senha": "134652" 
         ///     } 
+        ///     
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
         /// <response code="401">E-mail ou senha invalido</response>
@@ -150,12 +154,14 @@ namespace AminaApi.Src.Controladores
         public async Task<ActionResult> LogarAsync([FromBody] Usuario usuario)
         {
             var auxiliar = await _repositorio.PegarUsuarioPeloCPFAsync(usuario.CPF);
+
             if (auxiliar == null) return Unauthorized(new
             {
-                Mensagem = "E-mail invalido"
+                Mensagem = "CPF inválido"
             });
+
             if (auxiliar.Senha != _servicos.CodificarSenha(usuario.Senha))
-                return Unauthorized(new { Mensagem = "Senha invalida" });
+                return Unauthorized(new { Mensagem = "Senha inválida" });
 
             var token = "Bearer " + _servicos.GerarToken(auxiliar);
             return Ok(new { Usuario = auxiliar, Token = token });

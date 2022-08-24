@@ -13,7 +13,7 @@ namespace AminaApi.Src.Repositorios
         Task<List<Usuario>> PegarTodosUsuarioAsync();
         Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf);
         Task AtualizarUsuarioAsync(Usuario usuario);
-        Task NovaUsuarioAsync(Usuario usuario);
+        Task NovoUsuarioAsync(Usuario usuario);
         #endregion
     }
 }

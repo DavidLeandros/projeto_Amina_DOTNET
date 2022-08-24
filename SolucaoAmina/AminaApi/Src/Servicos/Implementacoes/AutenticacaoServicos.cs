@@ -13,7 +13,7 @@ namespace AminaApi.Src.Servicos.Implementacoes
     public class AutenticacaoServicos : IAutenticacao
     {
         #region Atributos
-        private IUsuario _repositorio;
+        private readonly IUsuario _repositorio;
         public IConfiguration Configuracao { get; }
         #endregion
 
@@ -44,11 +44,11 @@ namespace AminaApi.Src.Servicos.Implementacoes
         {
             var auxiliar = await _repositorio.PegarUsuarioPeloCPFAsync(usuario.CPF);
 
-            if (auxiliar != null) throw new Exception("Este email já está sendo utilizado!");
+            if (auxiliar != null) throw new Exception("Este CPF já está sendo utilizado!");
 
             usuario.Senha = CodificarSenha(usuario.Senha);
 
-            await _repositorio.NovaUsuarioAsync(usuario);
+            await _repositorio.NovoUsuarioAsync(usuario);
         }
 
         /// <summary> 

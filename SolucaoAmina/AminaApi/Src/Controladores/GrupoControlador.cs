@@ -1,7 +1,9 @@
 ﻿using AminaApi.Src.Modelos;
 using AminaApi.Src.Repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
@@ -109,6 +111,7 @@ namespace AminaApi.Src.Controladores
         ///         "midia": "",
         ///         "usuario": ""
         ///     }
+        ///     
         /// </remarks>
         /// <response code="200">Retorna grupo atualizado</response> 
         /// <response code="400">Erro na requisição</response>
@@ -134,6 +137,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="204">Grupo deletado</response>
         /// <response code="404">Id do grupo não existe</response>
         [HttpDelete("deletar/{idGrupo}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> DeletarGrupo([FromRoute] int idGrupo)
         {
             try
