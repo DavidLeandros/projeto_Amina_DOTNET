@@ -30,6 +30,10 @@ namespace AminaApi.Src.Controladores
         /// <summary> 
         /// Pegar todos os usuários
         /// </summary>
+        /// <para> Resumo: Método assincrono para pegar todos os usuarios</para>
+        /// <returns>ActionResult</returns> 
+        /// <response code="200">Retorna todos os usuarios</response> 
+        /// <response code="403">Usuario não autorizado</response>
         [HttpGet]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodosUsuarioAsync()
@@ -46,7 +50,7 @@ namespace AminaApi.Src.Controladores
         /// </summary> 
         /// <param name="usuarioCpf">CPF do usuario</param> 
         /// <returns>ActionResult</returns> 
-        /// <response code="200">Retorna o usuario</response> 
+        /// <response code="200">Usuario encontrado</response> 
         /// <response code="404">CPF não existente</response>
         [HttpGet("cpf/{usuarioCpf}")]
         [Authorize(Roles = "ADMINISTRADOR")]
@@ -78,9 +82,12 @@ namespace AminaApi.Src.Controladores
         ///     
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
-        /// <response code="401">CPF ja cadastrado</response>
+        /// <response code="422">CPF ja cadastrado</response>
         [HttpPost("cadastrar")]
         [AllowAnonymous]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(422)]
+
         public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuario)
         {
             try
@@ -97,7 +104,7 @@ namespace AminaApi.Src.Controladores
         /// <summary>
         /// Atualizar Usuario
         /// </summary> 
-        /// <param name="usuario">Contrutor para atualizar usuario</param> 
+        /// <param name="usuario">Construtor para atualizar usuario</param> 
         /// <returns>ActionResult</returns> 
         /// <remarks> 
         /// Exemplo de requisição: 
@@ -115,7 +122,7 @@ namespace AminaApi.Src.Controladores
         ///     }
         ///     
         /// </remarks> 
-        /// <response code="200">Retorna usuario atualizado</response> 
+        /// <response code="200">Usuario atualizado</response> 
         /// <response code="400">Erro na requisição</response>
         [HttpPut]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
@@ -147,11 +154,12 @@ namespace AminaApi.Src.Controladores
         ///     } 
         ///     
         /// </remarks> 
-        /// <response code="201">Retorna usuario criado</response> 
+        /// <response code="200">Usuario logado</response> 
         /// <response code="401">E-mail ou senha invalido</response>
+        /// 
         [HttpPost("logar")]
         [AllowAnonymous]
-        public async Task<ActionResult> LogarAsync([FromBody] Usuario usuario)
+        public async Task<ActionResult> LogarAsync([FromBody] UserLogin usuario)
         {
             var auxiliar = await _repositorio.PegarUsuarioPeloCPFAsync(usuario.CPF);
 

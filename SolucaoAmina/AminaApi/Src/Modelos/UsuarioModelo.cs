@@ -37,4 +37,10 @@ namespace AminaApi.Src.Modelos
         public List<Postagem> MinhasPostagens { get; set; }
         #endregion
     }
+
+    public class UserLogin
+    {
+        public string CPF { get; set; }
+        public string Senha { get; set; }
+    }
 }
