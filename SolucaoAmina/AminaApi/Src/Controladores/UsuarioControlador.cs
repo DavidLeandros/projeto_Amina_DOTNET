@@ -87,7 +87,6 @@ namespace AminaApi.Src.Controladores
         [AllowAnonymous]
         [ProducesResponseType(201)]
         [ProducesResponseType(422)]
-
         public async Task<ActionResult> NovoUsuarioAsync([FromBody] Usuario usuario)
         {
             try

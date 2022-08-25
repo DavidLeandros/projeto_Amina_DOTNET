@@ -33,6 +33,7 @@ namespace AminaApi.Src.Controladores
         /// </summary>
         /// <returns>ActionResult</returns>
         [HttpGet]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodosGruposAsync()
         {
             var lista = await _repositorio.PegarTodosGruposAsync();
@@ -48,6 +49,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="200">Retorna o grupo</response> 
         /// <response code="404">Id não existente</response>
         [HttpGet("id/{id}")]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarGruposPeloIdAsync([FromRoute] int id)
         {
             try
@@ -74,19 +76,22 @@ namespace AminaApi.Src.Controladores
         ///         "descricao": "",
         ///         "topico": "",
         ///         "midia": "",
-        ///         "usuario": ""
+        ///         "Usuario":{
+        ///             "id": 
+        ///         }
         ///     }
         ///     
         /// </remarks>
         /// <response code="201">Retorna grupo criado</response> 
         /// <response code="401">grupo ja cadastrado</response>
         [HttpPost("cadastrar")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> NovoGrupoAsync([FromBody] Grupo grupo)
         {
             try
             {
                 await _repositorio.NovoGrupoAsync(grupo);
-                return Created($"api/Grupos", grupo);
+                return Created($"api/Grupos/{grupo.Titulo}", grupo);
             }
             catch (Exception ex)
             {
@@ -116,6 +121,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="200">Retorna grupo atualizado</response> 
         /// <response code="400">Erro na requisição</response>
         [HttpPut]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarGrupo([FromBody] Grupo grupo)
         {
             try
