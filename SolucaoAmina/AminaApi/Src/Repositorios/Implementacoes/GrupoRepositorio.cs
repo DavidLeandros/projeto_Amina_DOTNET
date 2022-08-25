@@ -64,7 +64,7 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         /// <exception cref="Exception"></exception>
         public async Task NovoGrupoAsync(Grupo grupo)
         {
-            if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id Usuário não existe!");
+            //if (!ExisteIdUsuario(grupo.Usuario.Id)) throw new Exception("Id Usuário não existe!");
 
             await _contexto.Grupos.AddAsync(new Grupo
             {

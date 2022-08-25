@@ -1,8 +1,10 @@
 ﻿using AminaApi.Src.Modelos;
 using AminaApi.Src.Repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace AminaApi.Src.Controladores
@@ -29,6 +31,7 @@ namespace AminaApi.Src.Controladores
         /// </summary>
         /// <returns>ActionResult</returns>
         [HttpGet]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodasPostagensAsync()
         {
             var lista = await _repositorio.PegarTodasPostagemAsync();
@@ -46,6 +49,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="200">Retorna o postagem</response> 
         /// <response code="404">Id não existente</response>
         [HttpGet("id/{idPostagem}")]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
         {
             try
@@ -71,14 +75,22 @@ namespace AminaApi.Src.Controladores
         ///         "titulo": "",
         ///         "descricao": "",
         ///         "topico": "",
-        ///         "midia": "",
-        ///         "usuario": ""
+        ///         "foto": "",
+        ///         "Usuario":
+        ///         {
+        ///             "id": 
+        ///         },
+        ///         "Grupo":
+        ///         {
+        ///             "id":
+        ///         }
         ///     }
         ///     
         /// </remarks>
         /// <response code="201">Retorna grupo criado</response> 
         /// <response code="401">Postagem já cadastrado</response>
         [HttpPost("cadastrar")]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> NovaPostagemAsync([FromBody] Postagem postagem)
         {
             try
@@ -106,13 +118,14 @@ namespace AminaApi.Src.Controladores
         ///         "titulo": "",
         ///         "descricao": "",
         ///         "topico": "",
-        ///         "midia": ""
+        ///         "foto": ""
         ///     }
         ///     
         /// </remarks>
         /// <response code="200">Retorna postagem atualizado</response> 
         /// <response code="400">Erro na requisição</response>
         [HttpPut]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarPostagemAsync([FromBody] Postagem postagem)
         {
             try
@@ -134,6 +147,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="204">Postagem deletada</response>
         /// <response code="404">Id da postagem não existe</response>
         [HttpDelete("id/{idPostagem}")]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> DeletarPostagem([FromBody] int idPostagem)
         {
             try
