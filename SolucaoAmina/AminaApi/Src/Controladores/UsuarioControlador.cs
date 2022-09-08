@@ -46,18 +46,34 @@ namespace AminaApi.Src.Controladores
         }
 
         /// <summary> 
-        /// Pegar usuário pelo CPF
+        /// Pegar usuário pelo Nome
         /// </summary> 
-        /// <param name="usuarioCpf">CPF do usuario</param> 
+        /// <param name="usuarioNome">Nome do usuario</param> 
         /// <returns>ActionResult</returns> 
         /// <response code="200">Usuario encontrado</response> 
-        /// <response code="404">CPF não existente</response>
-        [HttpGet("cpf/{usuarioCpf}")]
+        /// <response code="404">Email não existente</response>
+        [HttpGet("nome/{usuarioNome}")]
         [Authorize(Roles = "ADMINISTRADOR")]
-        public async Task<ActionResult> PegarUsuarioPeloCPFAsync([FromRoute] string usuarioCpf)
+        public async Task<ActionResult> PegarUsuarioPeloNomeAsync([FromRoute] string usuarioNome)
         {
-            var usuario = await _repositorio.PegarUsuarioPeloCPFAsync(usuarioCpf);
+            var usuario = await _repositorio.PegarUsuarioPeloNomeAsync(usuarioNome);
             if (usuario == null) return NotFound(new { Mensagem = "Usuário não encontrado" });
+            return Ok(usuario);
+        }
+
+        /// <summary>
+        /// Pegar usuário pelo Id
+        /// </summary>
+        /// <param name="usuarioId">Id do usuário</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Usuario encontrado</response> 
+        /// <response code="404">Id não existente</response>
+        [HttpGet("id/{usuarioId}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
+        public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int usuarioId)
+        {
+            var usuario = await _repositorio.PegarUsuarioPeloIdAsync(usuarioId);
+            if(usuario == null) return NotFound(new { Mensagem = "Usuário não encontrado" });
             return Ok(usuario);
         }
 
@@ -71,7 +87,7 @@ namespace AminaApi.Src.Controladores
         /// 
         ///     POST /api/Usuarios/cadastrar 
         ///     { 
-        ///         "cpf": "11122233344",
+        ///         "email": "usuario@email.com",
         ///         "nome": "Nome do Usuario", 
         ///         "genero": "Feminino", 
         ///         "senha": "134652", 
@@ -82,7 +98,7 @@ namespace AminaApi.Src.Controladores
         ///     
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
-        /// <response code="422">CPF ja cadastrado</response>
+        /// <response code="422">Email ja cadastrado</response>
         [HttpPost("cadastrar")]
         [AllowAnonymous]
         [ProducesResponseType(201)]
@@ -92,7 +108,7 @@ namespace AminaApi.Src.Controladores
             try
             {
                 await _servicos.CriarUsuarioSemDuplicarAsync(usuario);
-                return Created($"api/Usuarios/cpf/{usuario.CPF}", usuario);
+                return Created($"api/Usuarios/cpf/{usuario.Email}", usuario);
 
             }catch (Exception ex)
             {
@@ -111,12 +127,11 @@ namespace AminaApi.Src.Controladores
         ///     PUT /api/Usuarios/cadastrar 
         ///     { 
         ///         "id": 0,
-        ///         "cpf": "11122233344",
+        ///         "email": "usuario@email.com",
         ///         "nome": "Nome do Usuario", 
         ///         "genero": "Feminino", 
         ///         "senha": "134652", 
-        ///         "urlfoto": "URLFOTO", 
-        ///         "tipo": "NORMAL",
+        ///         "urlfoto": "URLFOTO",
         ///         "datanascimento": "2022-08-19T11:07:37.470Z"
         ///     }
         ///     
@@ -148,7 +163,7 @@ namespace AminaApi.Src.Controladores
         /// 
         ///     POST /api/Usuarios/logar 
         ///     { 
-        ///         "cpf": "11122233344", 
+        ///         "email": "usuario@email.com",
         ///         "senha": "134652" 
         ///     } 
         ///     
@@ -160,7 +175,7 @@ namespace AminaApi.Src.Controladores
         [AllowAnonymous]
         public async Task<ActionResult> LogarAsync([FromBody] UserLogin usuario)
         {
-            var auxiliar = await _repositorio.PegarUsuarioPeloCPFAsync(usuario.CPF);
+            var auxiliar = await _repositorio.PegarUsuarioPeloEmailAsync(usuario.Email);
 
             if (auxiliar == null) return Unauthorized(new
             {
