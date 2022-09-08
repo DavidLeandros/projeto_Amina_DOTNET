@@ -42,7 +42,7 @@ namespace AminaApi.Src.Controladores
         }
 
         /// <summary>
-        /// Pegar usuario pelo Id
+        /// Pegar grupo pelo Id
         /// </summary>
         /// <param name="id">Id do grupo</param>
         /// <returns>ActionResult</returns>

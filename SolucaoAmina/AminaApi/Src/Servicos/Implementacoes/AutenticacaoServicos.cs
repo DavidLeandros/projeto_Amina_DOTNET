@@ -42,9 +42,9 @@ namespace AminaApi.Src.Servicos.Implementacoes
         /// </summary> 
         public async Task CriarUsuarioSemDuplicarAsync(Usuario usuario)
         {
-            var auxiliar = await _repositorio.PegarUsuarioPeloCPFAsync(usuario.CPF);
+            var auxiliar = await _repositorio.PegarUsuarioPeloEmailAsync(usuario.Email);
 
-            if (auxiliar != null) throw new Exception("Este CPF já está sendo utilizado!");
+            if (auxiliar != null) throw new Exception("Este Email já está sendo utilizado!");
 
             usuario.Senha = CodificarSenha(usuario.Senha);
 
@@ -64,7 +64,7 @@ namespace AminaApi.Src.Servicos.Implementacoes
                 Subject = new ClaimsIdentity(
                     new Claim[] 
                     { 
-                        new Claim(ClaimTypes.Name, usuario.CPF.ToString()), 
+                        new Claim(ClaimTypes.Email, usuario.Email.ToString()), 
                         new Claim(ClaimTypes.Role, usuario.Tipo.ToString())
                     }), 
                 Expires = DateTime.UtcNow.AddHours(2), 

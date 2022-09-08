@@ -11,7 +11,9 @@ namespace AminaApi.Src.Repositorios
     {
         #region Métodos
         Task<List<Usuario>> PegarTodosUsuarioAsync();
-        Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf);
+        Task<Usuario> PegarUsuarioPeloNomeAsync(string nome);
+        Task<Usuario> PegarUsuarioPeloEmailAsync(string email);
+        Task<Usuario> PegarUsuarioPeloIdAsync(int id);
         Task AtualizarUsuarioAsync(Usuario usuario);
         Task NovoUsuarioAsync(Usuario usuario);
         #endregion

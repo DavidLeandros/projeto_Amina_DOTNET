@@ -31,13 +31,37 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         }
 
         /// <summary>
-        /// <para> Resumo: Método assincrono para pegar um usuario pelo CPF</para>
+        /// <para> Resumo: Método assincrono para pegar um usuario pelo Nome</para>
         /// </summary>
-        /// <param name="cpf"></param>
+        /// <param name="nome"></param>
         /// <returns>ActionResult</returns>
-        public async Task<Usuario> PegarUsuarioPeloCPFAsync(string cpf)
+        public async Task<Usuario> PegarUsuarioPeloNomeAsync(string nome)
         {
-            return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.CPF == cpf);
+            return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Nome == nome);
+        }
+
+        public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
+        {
+            return await _contexto.Usuarios.FirstOrDefaultAsync(e => e.Email == email);
+        }
+
+        /// <summary>
+        /// <para> Resumo: Método assincrono para pegar um usuario pelo Id</para>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Usuario> PegarUsuarioPeloIdAsync(int id)
+        {
+            if (!ExisteId(id)) throw new Exception("Id do usuário não foi encontrado!");
+
+            return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+
+            bool ExisteId(int id)
+            {
+                var aux = _contexto.Usuarios.FirstAsync(u => u.Id == id);
+                return aux != null;
+            }
         }
 
         /// <summary>
@@ -49,7 +73,7 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         {
             await _contexto.Usuarios.AddAsync(new Usuario
             {
-                CPF = usuario.CPF,
+                Email = usuario.Email,
                 Nome = usuario.Nome,
                 Genero = usuario.Genero,
                 Senha = usuario.Senha,
@@ -69,10 +93,10 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         {
             var aux = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
             aux.Nome = usuario.Nome;
+            aux.Email = usuario.Email;
             aux.Genero = usuario.Genero;
             aux.Senha = usuario.Senha;
             aux.UrlFoto = usuario.UrlFoto;
-            aux.Tipo = usuario.Tipo;
             aux.DataNascimento = usuario.DataNascimento;
 
             _contexto.Usuarios.Update(aux);
