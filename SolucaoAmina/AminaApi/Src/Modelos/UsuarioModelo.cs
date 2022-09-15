@@ -22,8 +22,6 @@ namespace AminaApi.Src.Modelos
 
         public string Nome { get; set; }
 
-        public string Genero { get; set; }
-
         public string Senha { get; set; }
 
         public string UrlFoto { get; set; }
@@ -31,6 +29,8 @@ namespace AminaApi.Src.Modelos
         [Required]
         public TipoUsuario Tipo { get; set; }
 
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
 
         [JsonIgnore, InverseProperty("usuario")]
