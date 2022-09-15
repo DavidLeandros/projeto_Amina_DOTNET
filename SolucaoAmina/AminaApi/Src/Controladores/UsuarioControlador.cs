@@ -46,6 +46,22 @@ namespace AminaApi.Src.Controladores
         }
 
         /// <summary> 
+        /// Pegar usuários pelo Nome
+        /// </summary> 
+        /// <param name="usuariosNome">Nome do usuario</param> 
+        /// <returns>ActionResult</returns> 
+        /// <response code="200">Usuario encontrado</response> 
+        /// <response code="404">Email não existente</response>
+        [HttpGet("nome/{usuariosNome}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
+        public async Task<ActionResult> PegarUsuariosPeloNomeAsync([FromRoute] string usuariosNome)
+        {
+            var usuario = await _repositorio.PegarUsuariosPeloNomeAsync(usuariosNome);
+            if (usuario == null) return NotFound(new { Mensagem = "Usuário não encontrado" });
+            return Ok(usuario);
+        }
+
+        /// <summary> 
         /// Pegar usuário pelo Nome
         /// </summary> 
         /// <param name="usuarioNome">Nome do usuario</param> 
@@ -89,11 +105,10 @@ namespace AminaApi.Src.Controladores
         ///     { 
         ///         "email": "usuario@email.com",
         ///         "nome": "Nome do Usuario", 
-        ///         "genero": "Feminino", 
         ///         "senha": "134652", 
         ///         "urlfoto": "URLFOTO", 
         ///         "tipo": "NORMAL",
-        ///         "datanascimento": "2022-08-19T11:07:37.470Z"
+        ///         "datanascimento": "2022-08-19"
         ///     } 
         ///     
         /// </remarks> 
@@ -129,10 +144,9 @@ namespace AminaApi.Src.Controladores
         ///         "id": 0,
         ///         "email": "usuario@email.com",
         ///         "nome": "Nome do Usuario", 
-        ///         "genero": "Feminino", 
         ///         "senha": "134652", 
         ///         "urlfoto": "URLFOTO",
-        ///         "datanascimento": "2022-08-19T11:07:37.470Z"
+        ///         "datanascimento": "2022-08-19"
         ///     }
         ///     
         /// </remarks> 
@@ -179,7 +193,7 @@ namespace AminaApi.Src.Controladores
 
             if (auxiliar == null) return Unauthorized(new
             {
-                Mensagem = "CPF inválido"
+                Mensagem = "Email inválido"
             });
 
             if (auxiliar.Senha != _servicos.CodificarSenha(usuario.Senha))

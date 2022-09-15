@@ -3,6 +3,7 @@ using AminaApi.Src.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AminaApi.Src.Repositorios.Implementacoes
@@ -31,15 +32,30 @@ namespace AminaApi.Src.Repositorios.Implementacoes
         }
 
         /// <summary>
-        /// <para> Resumo: Método assincrono para pegar um usuario pelo Nome</para>
+        /// <para> Resumo: Método assincrono para pegar vários usuários pelo Nome</para>
         /// </summary>
         /// <param name="nome"></param>
         /// <returns>ActionResult</returns>
+        public async Task<List<Usuario>> PegarUsuariosPeloNomeAsync(string nome)
+        {
+            return await _contexto.Usuarios.Where(u => u.Nome.Contains(nome)).ToListAsync();
+        }
+
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar um usuário pelo Nome</para>
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <returns></returns>
         public async Task<Usuario> PegarUsuarioPeloNomeAsync(string nome)
         {
             return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Nome == nome);
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar um usuário pelo Email</para>
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<Usuario> PegarUsuarioPeloEmailAsync(string email)
         {
             return await _contexto.Usuarios.FirstOrDefaultAsync(e => e.Email == email);
@@ -75,7 +91,6 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             {
                 Email = usuario.Email,
                 Nome = usuario.Nome,
-                Genero = usuario.Genero,
                 Senha = usuario.Senha,
                 UrlFoto = usuario.UrlFoto,
                 Tipo = usuario.Tipo,
@@ -94,7 +109,6 @@ namespace AminaApi.Src.Repositorios.Implementacoes
             var aux = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
             aux.Nome = usuario.Nome;
             aux.Email = usuario.Email;
-            aux.Genero = usuario.Genero;
             aux.Senha = usuario.Senha;
             aux.UrlFoto = usuario.UrlFoto;
             aux.DataNascimento = usuario.DataNascimento;

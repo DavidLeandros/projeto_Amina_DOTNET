@@ -76,12 +76,10 @@ namespace AminaApi.Src.Controladores
         ///         "descricao": "",
         ///         "topico": "",
         ///         "foto": "",
-        ///         "Usuario":
-        ///         {
+        ///         "Usuario": {
         ///             "id": 
         ///         },
-        ///         "Grupo":
-        ///         {
+        ///         "Grupo": {
         ///             "id":
         ///         }
         ///     }
