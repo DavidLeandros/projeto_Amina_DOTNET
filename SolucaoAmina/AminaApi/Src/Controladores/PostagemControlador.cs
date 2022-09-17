@@ -30,7 +30,7 @@ namespace AminaApi.Src.Controladores
         /// Pegar todas as postagens
         /// </summary>
         /// <returns>ActionResult</returns>
-        [HttpGet]
+        [HttpGet("todasPostagens")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodasPostagensAsync()
         {
@@ -48,7 +48,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o postagem</response> 
         /// <response code="404">Id não existente</response>
-        [HttpGet("id/{idPostagem}")]
+        [HttpGet("idPostagem/{idPostagem}")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarPostagemPeloId([FromRoute] int idPostagem)
         {
@@ -87,7 +87,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks>
         /// <response code="201">Retorna grupo criado</response> 
         /// <response code="401">Postagem já cadastrado</response>
-        [HttpPost("cadastrar")]
+        [HttpPost("cadastrarPostagem")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> NovaPostagemAsync([FromBody] Postagem postagem)
         {
@@ -122,7 +122,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks>
         /// <response code="200">Retorna postagem atualizado</response> 
         /// <response code="400">Erro na requisição</response>
-        [HttpPut]
+        [HttpPut("atualizarPostagem")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarPostagemAsync([FromBody] Postagem postagem)
         {
@@ -144,7 +144,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="204">Postagem deletada</response>
         /// <response code="404">Id da postagem não existe</response>
-        [HttpDelete("id/{idPostagem}")]
+        [HttpDelete("idPostagem/{idPostagem}")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> DeletarPostagem([FromBody] int idPostagem)
         {

@@ -34,7 +34,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns> 
         /// <response code="200">Retorna todos os usuarios</response> 
         /// <response code="403">Usuario não autorizado</response>
-        [HttpGet]
+        [HttpGet("todosUsuarios")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodosUsuarioAsync()
         {
@@ -48,15 +48,15 @@ namespace AminaApi.Src.Controladores
         /// <summary> 
         /// Pegar usuários pelo Nome
         /// </summary> 
-        /// <param name="usuariosNome">Nome do usuario</param> 
+        /// <param name="usuariosNomes">Nome do usuario</param> 
         /// <returns>ActionResult</returns> 
         /// <response code="200">Usuario encontrado</response> 
         /// <response code="404">Email não existente</response>
-        [HttpGet("nome/{usuariosNome}")]
+        [HttpGet("nomes/{usuariosNomes}")]
         [Authorize(Roles = "ADMINISTRADOR")]
-        public async Task<ActionResult> PegarUsuariosPeloNomeAsync([FromRoute] string usuariosNome)
+        public async Task<ActionResult> PegarUsuariosPeloNomeAsync([FromRoute] string usuariosNomes)
         {
-            var usuario = await _repositorio.PegarUsuariosPeloNomeAsync(usuariosNome);
+            var usuario = await _repositorio.PegarUsuariosPeloNomeAsync(usuariosNomes);
             if (usuario == null) return NotFound(new { Mensagem = "Usuário não encontrado" });
             return Ok(usuario);
         }
@@ -84,7 +84,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="200">Usuario encontrado</response> 
         /// <response code="404">Id não existente</response>
-        [HttpGet("id/{usuarioId}")]
+        [HttpGet("idUsuario/{usuarioId}")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int usuarioId)
         {
@@ -114,7 +114,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks> 
         /// <response code="201">Retorna usuario criado</response> 
         /// <response code="422">Email ja cadastrado</response>
-        [HttpPost("cadastrar")]
+        [HttpPost("cadastrarUsuario")]
         [AllowAnonymous]
         [ProducesResponseType(201)]
         [ProducesResponseType(422)]
@@ -152,7 +152,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks> 
         /// <response code="200">Usuario atualizado</response> 
         /// <response code="400">Erro na requisição</response>
-        [HttpPut]
+        [HttpPut("atualizarUsuario")]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarUsuarioAsync([FromBody] Usuario usuario)
         {

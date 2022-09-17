@@ -32,7 +32,7 @@ namespace AminaApi.Src.Controladores
         /// Pegar todos os grupos
         /// </summary>
         /// <returns>ActionResult</returns>
-        [HttpGet]
+        [HttpGet("todosGrupos")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarTodosGruposAsync()
         {
@@ -48,7 +48,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="200">Retorna o grupo</response> 
         /// <response code="404">Id não existente</response>
-        [HttpGet("id/{id}")]
+        [HttpGet("idGrupo/{id}")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
         public async Task<ActionResult> PegarGruposPeloIdAsync([FromRoute] int id)
         {
@@ -84,7 +84,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks>
         /// <response code="201">Retorna grupo criado</response> 
         /// <response code="401">grupo ja cadastrado</response>
-        [HttpPost("cadastrar")]
+        [HttpPost("cadastrarGrupo")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> NovoGrupoAsync([FromBody] Grupo grupo)
         {
@@ -120,7 +120,7 @@ namespace AminaApi.Src.Controladores
         /// </remarks>
         /// <response code="200">Retorna grupo atualizado</response> 
         /// <response code="400">Erro na requisição</response>
-        [HttpPut]
+        [HttpPut("atualizarGrupo")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarGrupo([FromBody] Grupo grupo)
         {
@@ -142,7 +142,7 @@ namespace AminaApi.Src.Controladores
         /// <returns>ActionResult</returns>
         /// <response code="204">Grupo deletado</response>
         /// <response code="404">Id do grupo não existe</response>
-        [HttpDelete("deletar/{idGrupo}")]
+        [HttpDelete("deletarGrupo/{idGrupo}")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> DeletarGrupo([FromRoute] int idGrupo)
         {
