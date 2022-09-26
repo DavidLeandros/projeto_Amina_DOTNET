@@ -70,7 +70,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks>
         /// Exemplo de requisição: 
         ///     
-        ///     Post /api/Grupos/cadastrar
+        ///     Post /api/Grupos/cadastrarGrupo
         ///     {
         ///         "titulo": "",
         ///         "descricao": "",
@@ -107,7 +107,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks>
         /// Exemplo de requisição: 
         ///     
-        ///     Put /api/Grupos
+        ///     Put /api/Grupos/atualizarGrupo
         ///     {
         ///         "id": 0,
         ///         "titulo": "",

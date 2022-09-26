@@ -110,7 +110,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks>
         /// Exemplo de requisição: 
         ///     
-        ///     Put /api/Postagens
+        ///     Put /api/Postagens/cadastrarPostagem
         ///     {
         ///         "id": 0,
         ///         "titulo": "",
@@ -146,7 +146,7 @@ namespace AminaApi.Src.Controladores
         /// <response code="404">Id da postagem não existe</response>
         [HttpDelete("idPostagem/{idPostagem}")]
         [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
-        public async Task<ActionResult> DeletarPostagem([FromBody] int idPostagem)
+        public async Task<ActionResult> DeletarPostagem([FromRoute] int idPostagem)
         {
             try
             {
