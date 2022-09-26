@@ -101,7 +101,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks> 
         /// Exemplo de requisição: 
         /// 
-        ///     POST /api/Usuarios/cadastrar 
+        ///     POST /api/Usuarios/cadastrarUsuario 
         ///     { 
         ///         "email": "usuario@email.com",
         ///         "nome": "Nome do Usuario", 
@@ -139,7 +139,7 @@ namespace AminaApi.Src.Controladores
         /// <remarks> 
         /// Exemplo de requisição: 
         /// 
-        ///     PUT /api/Usuarios/cadastrar 
+        ///     PUT /api/Usuarios/atualizarUsuario 
         ///     { 
         ///         "id": 0,
         ///         "email": "usuario@email.com",
