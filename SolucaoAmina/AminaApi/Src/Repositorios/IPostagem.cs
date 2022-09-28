@@ -11,6 +11,7 @@ namespace AminaApi.Src.Repositorios
     {
         #region Métodos
         Task<List<Postagem>> PegarTodasPostagemAsync();
+        Task<List<Postagem>> PegarTodasPostagemPorGrupoAsync(int idGrupo);
         Task<Postagem> PegarPostagensPeloIdAsync(int id);
         Task NovaPostagemAsync(Postagem postagem);
         Task AtualizarPostagemAsync(Postagem postagem);
