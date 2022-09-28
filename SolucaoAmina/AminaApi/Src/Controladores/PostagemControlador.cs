@@ -42,6 +42,21 @@ namespace AminaApi.Src.Controladores
         }
 
         /// <summary>
+        /// Pegar todas as postagens por grupo
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        [HttpGet("todasPostagensPorGrupo/{idGrupo}")]
+        [Authorize(Roles = "NORMAL, ADMINISTRADOR")]
+        public async Task<ActionResult> PegarTodasPostagensPorGrupoAsync([FromRoute] int idGrupo)
+        {
+            var lista = await _repositorio.PegarTodasPostagemPorGrupoAsync(idGrupo);
+
+            if (lista.Count < 1) return NoContent();
+
+            return Ok(lista);
+        }
+
+        /// <summary>
         /// Pegar postagem pelo Id
         /// </summary>
         /// <param name="idPostagem">Id da postagem</param>

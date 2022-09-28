@@ -34,6 +34,14 @@ namespace AminaApi.Src.Repositorios.Implementacoes
                 .ToListAsync();
         }
 
+        public Task<List<Postagem>> PegarTodasPostagemPorGrupoAsync(int idGrupo)
+        {
+            return _contexto.Postagens
+                .Include(g => g.Grupo)
+                .Where(x => x.Grupo.Id == idGrupo)
+                .ToListAsync();
+        }
+
         /// <summary>
         /// <para>Resumo: Método assincrono para pegar postagem pelo Id</para>
         /// </summary>
